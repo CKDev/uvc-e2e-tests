@@ -1,0 +1,19 @@
+[{
+  "id": 1,
+  "name": "Test Hospital 1",
+  "address_1": null,
+  "address_2": null,
+  "city": "Columbus",
+  "state": "OH",
+  "zip": "43213",
+  "enclosures": []
+}, {
+  "id": 2,
+  "name": "Test Hospital 2",
+  "address_1": "123 Fake st.",
+  "address_2": "Unit B",
+  "city": "Denver",
+  "state": "CO",
+  "zip": "12345",
+  "enclosures": []
+}]
