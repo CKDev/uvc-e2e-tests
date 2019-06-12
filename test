@@ -1,6 +1,6 @@
 #/bin/bash
 
-docker kill sidekiq admin api redis chrome cypress db
+docker kill sidekiq admin api redis cypress db
 $(aws ecr get-login --profile uvc --no-include-email)
 
 docker network inspect app-network &>/dev/null || docker network create app-network
@@ -10,6 +10,7 @@ docker pull 836563996951.dkr.ecr.us-east-2.amazonaws.com/uvc-api:staging
 docker pull 836563996951.dkr.ecr.us-east-2.amazonaws.com/uvc-sidekiq:staging
 docker pull redis:4.0-alpine
 docker pull postgres:11
+docker pull cypress/included:3.2.0
 
 docker run --rm -it -d -p 5432:5432 --env-file .env --name db --network app-network postgres:11
 docker run --rm -it -d -p 6379:6379 --env-file .env --name redis --network app-network redis:4.0-alpine
@@ -22,3 +23,7 @@ docker system prune -f
 docker exec -it api bundle exec rake db:create
 docker exec -it api bundle exec rake db:migrate
 docker exec -it api bundle exec rake test_data:populate_set_1
+
+docker run -it -v $PWD:/e2e -w /e2e cypress/included:3.2.0
+
+
