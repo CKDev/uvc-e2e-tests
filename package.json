@@ -4,12 +4,16 @@
   "description": "E2E Cypress tests for UVC application containers",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "cypress:open": "cypress open"
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
+    "test": "start-server-and-test start http://localhost:443 cypress:run"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "cypress": "^3.3.1"
+  },
+  "devDependencies": {
+    "start-server-and-test": "^1.9.1"
   }
 }
