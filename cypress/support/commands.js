@@ -30,8 +30,8 @@
 Cypress.Commands.add('revertFetchToXHR', () => {
   Cypress.on('window:before:load', (win) => {
     delete win.fetch
-  });
-});
+  })
+})
 
 // Login Commands
 Cypress.Commands.add('login', (email, password) => {
@@ -68,9 +68,22 @@ Cypress.Commands.add('noServerLogin', (email, password, uvc_admin=false) => {
         "roles": roles
       }
     }
-  });
+  })
   cy.visit('/');
   cy.get('#email').type(email);
   cy.get('#password').type(password);
   cy.get('button[type=submit]').click();
-});
+})
+
+// Nav Commands
+Cypress.Commands.add('clickIntoAddItem',() => {
+  cy.visit('/departments/1');
+  cy.get('#add-equipment-item').should('exist').click();
+  cy.get('#select-equipment_type_id').should('exist').click();
+})
+
+Cypress.Commands.add('clickIntoBulkUpload',() => {
+  cy.visit('/departments/1');
+  cy.get('#bulk-upload-equipment-items').should('exist').click({force: true});
+  cy.get('#select-equipment_type_id').should('exist').click();
+})

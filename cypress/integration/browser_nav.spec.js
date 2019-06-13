@@ -16,7 +16,7 @@ describe('regression on #200: department detail view, then browser back button',
     cy.url().should('include', '/facilities/1');
     cy.get('p').contains('Oncology').click();
     cy.url().should('include', '/departments/1');
-    cy.contains('77750863876007633531990179596275').should('exist'); // checks seeded eTag is there
+    cy.contains('111222333').should('exist'); // checks seeded eTag is there
     cy.go('back');
     cy.url().should('include', '/facilities/1');
     cy.contains('0987654321').should('exist');
@@ -28,7 +28,7 @@ describe('regression on #200: department detail view, then browser back button',
     cy.url().should('include', '/facilities');
     cy.get('p').contains('Oncology').click();
     cy.url().should('include', '/departments/1');
-    cy.contains('77750863876007633531990179596275').should('exist'); // checks seeded eTag is there
+    cy.contains('111222333').should('exist'); // checks seeded eTag is there
     cy.go('back');
     cy.url().should('include', '/facilities/1');
     cy.contains('0987654321').should('exist');
@@ -40,12 +40,11 @@ describe('regression on #200: department detail view, then browser back button',
     cy.url().should('include', '/facilities');
     cy.get('p').contains('Oncology').click();
     cy.url().should('include', '/departments/1');
-    cy.contains('77750863876007633531990179596275').should('exist'); // checks seeded eTag is there
+    cy.contains('111222333').should('exist'); // checks seeded eTag is there
     cy.go('back');
     cy.url().should('include', '/facilities/1');
     cy.contains('0987654321').should('exist');
   })
-
 })
 
 describe('regression on #203: open modals, then click Back and Forward', () =>  {
@@ -71,7 +70,7 @@ describe('regression on #203: open modals, then click Back and Forward', () =>  
     cy.get('p').contains('Doug').click();
     cy.url().should('include', '/facilities/1');
     cy.wait(1000);
-    cy.get('#add-uve').click();
+    cy.get('#add-uve').click({force: true});
     cy.get('span').contains('Add Enclosure').should('exist');
     cy.go('back');
     cy.url().should('not.include','/1');
@@ -87,8 +86,8 @@ describe('regression on #203: open modals, then click Back and Forward', () =>  
     cy.get('span').contains('Facilities').click();
     cy.url().should('include', '/facilities/1');
     cy.wait(1000);
-    cy.get('button span').eq(8).click();
-    cy.get('button span').contains('Cancel').should('exist');
+    cy.get('#add-user').click();
+    cy.get('h2').contains('New User').should('exist');
     cy.go('back');
     cy.url().should('include','/dashboard');
     cy.go('forward');
@@ -109,5 +108,4 @@ describe('regression on #203: open modals, then click Back and Forward', () =>  
     cy.url().should('include','/facilities/1')
     cy.get('h6').contains('New Department').should('not.exist');
   })
-  
 })
