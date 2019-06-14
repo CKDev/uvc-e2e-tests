@@ -18,41 +18,14 @@ Spec goals:
   7. Split tests amongst User, FA, and UVC-A
 */
 
-describe('confirms fundamental UI components are present', () => {
-
-  it('confirms "Add Item" modal loads as each user type, and that required buttons are present', () => {
-    // TODO: write function for checking buttons are there; call for all 3 user roles
-  })
-
-  it('confirms "Bulk Upload" modal loads as each user type', () => {
-    // TODO:
-  })
-
-  it('confirms that default equip_times are present (add item)', () => {
-    // TODO: write function that looks for each of the default equip_types and confirms they are there
-  })
-
-  it('confirms that default equip_types are present (bulk upload)', () => {
-    // TODO: 
-  })
-
-  it('confirms that the frequency helper text appears if the input is disabled', () => {
-    // TODO: 
-  })
-})
-
 describe('confirms frequency is appropriately editable', () => {
 
   it('confirms frequency is not editable if protocol already exists (add item)', () => {
     cy.login('dev_user@firepointstudios.com', 'password');
     cy.clickIntoAddItem();
     cy.get('ul li').contains('Wheelchair').click();
-
-    // look at the frequency input field and confirm it is disabled
-    cy.get('input[name=frequency]').should('be.disabled');
-
-    // confirm that the field is not enabled
-    cy.get('input[name=frequency]').should('not.be.enabled');
+    cy.get('input[name=frequency]').should('be.disabled'); // look at the frequency input field and confirm it is disabled
+    cy.get('input[name=frequency]').should('not.be.enabled'); // confirm that the field is not enabled
   })
 
   it('confirms frequency is not editable if protocol already exists (bulk upload)', () => {
@@ -100,10 +73,17 @@ describe('confirms that protocol creation form throws appropriate error messages
     cy.login('dev_fa@firepointstudios.com', 'password');
     cy.clickIntoAddItem();
     cy.get('ul li').contains('Gurney').click();
-    cy.get('input[name=frequency').type('366');
+    cy.get('input[name=frequency]').type('366');
     cy.get('input#tag_id').type('111222333333');
     cy.get('#form-dialog-submit').click();
     cy.get('p#frequency-helper-text').contains('must be between 1 and 365').should('exist');
   })
-  
+
+  it('confirms that the frequency helper text appears if the input is disabled', () => {
+    cy.login('uvc_admin@firepointstudios.com', 'password');
+    cy.clickIntoAddItem();
+    cy.get('ul li').contains('Wheelchair').click();
+    cy.get('input[name=frequency]').click({force:true}); // needs force:true because element is disabled
+    cy.get('p').contains('To update the frequency of this equipment type, please navigate to the Protocol Frequency section on the department detail view.').should('exist');
+  })
 })
